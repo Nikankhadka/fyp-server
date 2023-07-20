@@ -1,0 +1,487 @@
+openapi: 3.0.0
+info:
+    title: "MeroGhar API"
+    description: "Documentation for the MeroGhar API"
+    version: 3.0.0
+    basePath: "http://localhost:2900"
+    schemas:
+        - http
+        - https
+
+# component portion defined the main portion of the api documentation
+components:
+  securitySchemes:
+    bearerAuth:
+     type: http
+     scheme: bearer
+     bearerFormat: JWT
+paths:
+  /auth/v1/registerUser:
+    post:
+      description: Register a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                firstName:
+                  type: string
+                  description: Name of the user
+                lastName:
+                  type: string
+                  description: Last name of the user
+                phoneNumber:
+                  type: string
+                  description: Phone number of the user
+                email:
+                  type: string
+                  description: Email of the user
+                password:
+                  type: string
+                  description: Password of the user
+                
+      responses:
+        200:
+          description: Successful response
+        400:
+          description: Invalid input
+      tags:
+        - User
+  /auth/v1/login:
+    post:
+      description: Login a user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: Email of the user
+                password:
+                  type: string
+                  description: Password of the user
+      responses:
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    description: JWT token for authentication
+        401:
+          description: Unauthorized
+      tags:
+        - User
+
+  /brand/v1/createBrand:
+    post:
+      security:
+       - bearerAuth: []
+      response:
+      200:
+        description: OK
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                brandName:
+                  type: string
+                  description: Name of the brand
+                description:
+                  type: string
+                  description: Description of the brand
+                company:
+                  type: string
+                  description: Company of the brand
+
+                     
+      responses:
+        200:
+          description: Successful response
+        400:
+          description: Invalid input
+      tags:
+        - Brand
+  /brand/v1/getBrand/:id:
+    get:
+     security:
+       - bearerAuth: []
+     response:
+      200:
+        description: OK
+    requestBody:
+       required: true
+       content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  :id:
+                    type: string
+                    description: ID of the brand
+       responses:
+        200:
+          description: Successful response
+        400:
+          description: Invalid input
+    tags:
+     - Brand
+      
+  /brand/v1/updateBrand/{id}:
+    patch:
+      description: Update a brand by ID
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: ID of the brand
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Name of the brand
+                description:
+                  type: string
+                  description: Description of the brand
+      responses:
+        200:
+          description: Successful response
+        400:
+          description: Invalid input
+      tags:
+        - Brand
+  /brand/v1/deleteBrand/:id:
+    delete:
+      description: Delete a brand by ID
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: ID of the brand
+      responses:
+        200:
+          description: Successful response
+        400:
+          description: Invalid input
+      tags:
+        - Brand
+  /brand/v1/getBrand:
+    get:
+      description: Get all brands
+      responses:
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    description: ID of the brand
+                  name:
+                    type: string
+                    description: Name of the brand
+                  description:
+                    type: string
+                    description: Description of the brand
+        400:
+          description: Invalid input
+      tags:
+        - Brand
+  /medicine/v1/createMedicine:
+    post:
+      security:
+       - bearerAuth: []
+      response:
+      200:
+        description: OK
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                genericName:
+                  type: string
+                  description: Name of the medicine
+                brand:
+                  type: string
+                  description: Brand of the medicine
+                basic :
+                  type: object
+                  properties:
+                    usagePharmacologicCategory:
+                      type: string
+                      description: Name of the basic
+                    adultDosing:
+                      type: string
+                      description: Description of the basic
+                    pediatricDosing:
+                      type: string
+                      description: Description of the basic
+                    renalAdjustedDosing:
+                      type: string
+                      description: Description of the basic
+                    hepaticDosing:
+                      type: string
+                      description: Description of the basic
+                    administration:
+                      type: string
+                      description: Description of the basic
+                    pregnancyRiskFactor:
+                      type: string
+                      description: Description of the basic
+                    breastfeedingConsiderations:
+                      type: string
+                      description: Description of the basic
+                    contradictions:
+                      type: string
+                      description: Description of the basic
+                    adverseEffects:
+                      type: string
+                      description: Description of the basic
+                    pharmacologicCategory:
+                      type: string
+                      description: Description of the basic
+                    drugInteractions:
+                      type: string
+                      description: Description of the basic
+        
+      responses:
+        200:
+          description: Successful response
+        400:
+          description: Invalid input
+      tags:
+        - Medicine
+  /medicine/v1/getMedicine/:id:
+    get:
+     security:
+       - bearerAuth: []
+     response:
+      200:
+        description: OK
+      requestBody:
+       required: true
+       content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  :id:
+                    type: string
+                    description: ID of the medicine
+      responses:
+        200:
+          description: Successful response
+        400:
+          description: Invalid input
+    tags:
+     - Medicine
+  
+  /medicine/v1/updateMedicine/{id}:
+    patch:
+      security:
+       - bearerAuth: []
+      description: Update a medicine by ID
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: ID of the medicine
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                genericName:
+                  type: string
+                  description: Name of the medicine
+                brand:
+                  type: string
+                  description: Brand of the medicine
+                basic :
+                  type: object
+                  properties:
+                    usagePharmacologicCategory:
+                      type: string
+                      description: Name of the basic
+                    adultDosing:
+                      type: string
+                      description: Description of the basic
+                    pediatricDosing:
+                      type: string
+                      description: Description of the basic
+                    renalAdjustedDosing:
+                      type: string
+                      description: Description of the basic
+                    hepaticDosing:
+                      type: string
+                      description: Description of the basic
+                    administration:
+                      type: string
+                      description: Description of the basic
+                    pregnancyRiskFactor:
+                      type: string
+                      description: Description of the basic
+                    breastfeedingConsiderations:
+                      type: string
+                      description: Description of the basic
+                    contradictions:
+                      type: string
+                      description: Description of the basic
+                    adverseEffects:
+                      type: string
+                      description: Description of the basic
+                    pharmacologicCategory:
+                      type: string
+                      description: Description of the basic
+                    drugInteractions:
+                      type: string
+                      description: Description of the basic
+      responses:
+        200:
+          description: Successful response
+        400:
+          description: Invalid input
+      tags:
+        - Medicine
+
+  /medicine/v1/deleteMedicine/{id}:
+    delete:
+      security:
+       - bearerAuth: []
+      description: Delete a medicine by ID
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: ID of the medicine
+      responses:
+        200:
+          description: Successful response
+        400:
+          description: Invalid input
+      tags:
+        - Medicine
+        
+  /medicine/v1/getMedicine:
+    get:
+      security:
+       - bearerAuth: []
+      description: Get all medicines
+      responses:
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    description: ID of the medicine
+                  genericName:
+                    type: string
+                    description: Name of the medicine
+                  brand:
+                    type: string
+                    description: Brand of the medicine
+                  basic :
+                    type: object
+                    properties:
+                      usagePharmacologicCategory:
+                        type: string
+                        description: Name of the basic
+                      adultDosing:
+                        type: string
+                        description: Description of the basic
+                      pediatricDosing:
+                        type: string
+                        description: Description of the basic
+                      renalAdjustedDosing:
+                        type: string
+                        description: Description of the basic
+                      hepaticDosing:
+                        type: string
+                        description: Description of the basic
+                      administration:
+                        type: string
+                        description: Description of the basic
+                      pregnancyRiskFactor:
+                        type: string
+                        description: Description of the basic
+                      breastfeedingConsiderations:
+                        type: string
+                        description: Description of the basic
+                      contradictions:
+                        type: string
+                        description: Description of the basic
+                      adverseEffects:
+                        type: string
+                        description: Description of the basic
+                      pharmacologicCategory:
+                        type: string
+                        description: Description of the basic
+                      drugInteractions:
+                        type: string
+                        description: Description of the basic
+        400:
+          description: Invalid input
+      tags:
+        - Medicine
+
+  /medicine/v1/getMedicineNames:
+    get:
+      security:
+       - bearerAuth: []
+      description: Get all medicines
+      responses:
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    description: ID of the medicine
+                  genericName:
+                    type: string
+                    description: Name of the medicine
+                  brand:
+                    type: string
+                    description: Brand of the medicine
+        400:
+          description: Invalid input
+      tags:
+        - Medicine
