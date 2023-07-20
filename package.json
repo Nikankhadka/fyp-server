@@ -1,7 +1,7 @@
 {
   "scripts": {
-  
-    "prod": "npm install && tsc &&node dist/server.js"
+    
+    "start": "npm install && tsc &&node dist/server.js"
   },
   "devDependencies": {
     "@types/dotenv": "^8.2.0",
