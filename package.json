@@ -1,7 +1,7 @@
 {
   "scripts": {
-    "start": "tsnd ./src/server.ts --respawn  --transpile-only --exit-child",
-    "prod": "tsc &&node dist/server.js"
+  
+    "prod": "npm install && tsc &&node dist/server.js"
   },
   "devDependencies": {
     "@types/dotenv": "^8.2.0",
