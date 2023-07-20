@@ -2,7 +2,7 @@
 import express from "express"
 const app=express()
 
-
+import { Request,Response } from "express"
 //necessary imports 
 import * as dotenv from "dotenv"
 import session from "express-session"
@@ -126,6 +126,9 @@ nodeCron.schedule('*/8 * * * *', () => {
         
     }
 });
+app.get('/',(req:Request:res:Response)=>{
+    res.send("heloo world")
+})
 
 //listen to server on ports
 app.listen(2900,
