@@ -37,7 +37,7 @@ app.use(express.json({limit:'10mb'}));
 app.use(express.urlencoded({extended:true,limit:'10mb'}))
 app.use(cors({
     //defines the origin of the request
-    origin:["https://meroghar.vercel.app","https://meroghar-rf5q.onrender.com","http://localhost:3000","fyp_meroghar.railway.internal","https://dark-hen-galoshes.cyclic.app"],
+    origin:["https://meroghar.vercel.app","https://meroghar-rf5q.onrender.com","http://localhost:3000"],
     //headers can be accessed and modified else cant
     credentials:true
 }))
@@ -91,24 +91,9 @@ app.use(clearUser)
 app.use(indexRouter)
 
 
-//setup cron task scheduling using node schedle 
-const rule=new cron.RecurrenceRule();
-rule.minute=10;
-
-const scheduleJob=cron.scheduleJob(rule,()=>{
-    try{
-        console.log("cron job started api calling using scheduleJob ")
-        const res=axios.get('https://dark-hen-galoshes.cyclic.app/property/v1/getProperty?limit=10&page=1',{withCredentials:true}).then(res=>console.log("response ayo hai")).catch(e=>console.log(e))
-
-        console.log("cron job end api called successfully using scheduleJob")
 
 
 
-    }catch(e){
-        console.log(e);
-        
-    }
-})
 
 
 // run this cron job every 8 minutes
@@ -126,7 +111,7 @@ nodeCron.schedule('*/8 * * * *', () => {
         
     }
 });
-app.get('/',(req:Request:res:Response)=>{
+app.get('/',(req:Request,res:Response)=>{
     res.send("heloo world")
 })
 
