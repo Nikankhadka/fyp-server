@@ -10,7 +10,7 @@ dotenv.config()
 const dbConnect=async()=>{
     try{
        // 
-         await connect(`mongodb://127.0.0.1:27017/meroghar`)
+         await connect(`mongodb+srv://nick11444:${process.env.dbPassword}@fypnikan.bud3xcp.mongodb.net/test`)
          console.log("Database Connected")
         
          console.log("Next Called")
