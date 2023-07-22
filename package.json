@@ -1,7 +1,7 @@
 {
   "scripts": {
-    "build":"tsc",
-    "start": "node dist/server.js"
+    
+    "start": " tsc &&node dist/server.js"
   },
   "devDependencies": {
     "@types/dotenv": "^8.2.0",
