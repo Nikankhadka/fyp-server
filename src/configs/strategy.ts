@@ -15,7 +15,7 @@ passport.use(new googleStrategy({
 
     clientID:process.env.googleClientId!,
     clientSecret:process.env.googleClientSecret!,
-    callbackURL:"https://meroghar-rf5q.onrender.com/auth/v1/google-callback"
+    callbackURL:"https://fyp-sever.onrender.com/auth/v1/google-callback"
 
     },async(accessToken,refreshToken,profile,done)=>{
         try{
@@ -34,7 +34,7 @@ passport.use(new facebookStrategy({
 
         clientID:process.env.facebookClientId!,
         clientSecret:process.env.facebookClientSecret!,
-        callbackURL:"https://meroghar-rf5q.onrender.com/auth/v1/facebook-callback",
+        callbackURL:"https://fyp-sever.onrender.com/auth/v1/facebook-callback",
          profileFields: ['id', 'displayName', 'photos', 'email']
         },async(accessToken,refreshToken,profile,done)=>{
             try{
