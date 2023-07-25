@@ -118,7 +118,7 @@ export const facebookLoginC=async(req:Request,res:Response)=>{
         console.log(req.user);
         const {accessToken,refreshToken,user}=await facebookLoginS(req.user)
         res.cookie("accessToken",accessToken,{maxAge:1800000,httpOnly:httpOnlyCookie})
-      .cookie("refreshToken",refreshToken,{maxAge:604800000,httpOnly:httpOnlyCookie).cookie("session",JSON.stringify(user),{maxAge:1500000,httpOnly:httpOnlyCookie})
+      .cookie("refreshToken",refreshToken,{maxAge:604800000,httpOnly:httpOnlyCookie}).cookie("session",JSON.stringify(user),{maxAge:1500000,httpOnly:httpOnlyCookie})
       .status(200).redirect("https://meroghar.vercel.app/Home")
 
     }catch(e:any){
