@@ -37,7 +37,7 @@ app.use(express.json({limit:'10mb'}));
 app.use(express.urlencoded({extended:true,limit:'10mb'}))
 app.use(cors({
     //defines the origin of the request
-    origin:["https://meroghar.vercel.app","https://meroghar-rf5q.onrender.com","http://localhost:3000"],
+    origin:["https://meroghar.vercel.app","https://fyp-sever.onrender.com","http://localhost:3000"],
     //headers can be accessed and modified else cant
     credentials:true
 }))
@@ -97,20 +97,20 @@ app.use(indexRouter)
 
 
 // run this cron job every 8 minutes
-// nodeCron.schedule('*/8 * * * *', () => {
-//     try{
-//         console.log("cron job started api calling using nodecron ")
-//         const res=axios.get('https://meroghar-rf5q.onrender.com/property/v1/getProperty?limit=10&page=1',{withCredentials:true}).then(res=>console.log("response ayo hai")).catch(e=>console.log(e))
+nodeCron.schedule('*/8 * * * *', () => {
+    try{
+        console.log("cron job started api calling using nodecron ")
+        const res=axios.get('https://fyp-sever.onrender.com/property/v1/getProperty?limit=10&page=1',{withCredentials:true}).then(res=>console.log("response ayo hai")).catch(e=>console.log(e))
 
-//         console.log("cron job end api called successfully using nodecron")
+        console.log("cron job end api called successfully using nodecron")
 
         
 
-//     }catch(e){
-//         console.log(e);
+    }catch(e){
+        console.log(e);
         
-//     }
-// });
+    }
+});
 app.get('/',(req:Request,res:Response)=>{
     res.send("heloo world")
 })

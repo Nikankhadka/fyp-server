@@ -8,6 +8,7 @@ import {
 	getReasonPhrase,
 	getStatusCode,
 } from 'http-status-codes';
+import { httpOnlyCookie } from "../../configs/constant";
 
 import dotenv from "dotenv";
 
@@ -40,9 +41,9 @@ export const LoginC=async(req:Request,res:Response)=>{
 
             if(success) {
                
-           return  res.cookie("accessToken",accessToken,{maxAge:1800000,httpOnly:true})
-            .cookie("refreshToken",refreshToken,{maxAge:604800000,httpOnly:true})
-            .cookie("session",JSON.stringify(user),{maxAge:1500000,httpOnly:true})
+           return  res.cookie("accessToken",accessToken,{maxAge:1800000,httpOnly:httpOnlyCookie})
+            .cookie("refreshToken",refreshToken,{maxAge:604800000,httpOnly:httpOnlyCookie})
+            .cookie("session",JSON.stringify(user),{maxAge:1500000,httpOnly:httpOnlyCookie})
             .status(200).send({success:true, message:"user successfully logged in",user});
             } 
 
@@ -77,8 +78,8 @@ export const refreshTokenC=async(req:Request,res:Response)=>{
       //now attach the token to cookie and send it to client
     
       //if client side request then set else use response data to set in Nextjs middleware
-      res.cookie("accessToken",tokens.newaccessToken,{maxAge:1800000,httpOnly:true})
-      .cookie("refreshToken",tokens.newrefreshToken,{maxAge:604800000,httpOnly:true}).cookie("session",JSON.stringify(user),{maxAge:1500000,httpOnly:true})
+      res.cookie("accessToken",tokens.newaccessToken,{maxAge:1800000,httpOnly:httpOnlyCookie})
+      .cookie("refreshToken",tokens.newrefreshToken,{maxAge:604800000,httpOnly:httpOnlyCookie}).cookie("session",JSON.stringify(user),{maxAge:1500000,httpOnly:httpOnlyCookie})
       .status(200).json({success:true, message:"user successfully verified",accessToken:tokens.newaccessToken,refreshToken:tokens.newrefreshToken,user});
 
 
@@ -99,8 +100,8 @@ export const googleLoginC=async(req:Request,res:Response)=>{
         console.log("req url",req.headers);
         const {accessToken,refreshToken,user}=await googleLoginS(req.user)
         
-        res.cookie("accessToken",accessToken,{maxAge:1800000,httpOnly:true})
-      .cookie("refreshToken",refreshToken,{maxAge:604800000,httpOnly:true}).cookie("session",JSON.stringify(user),{maxAge:1500000,httpOnly:true})
+        res.cookie("accessToken",accessToken,{maxAge:1800000,httpOnly:httpOnlyCookie})
+      .cookie("refreshToken",refreshToken,{maxAge:604800000,httpOnly:httpOnlyCookie}).cookie("session",JSON.stringify(user),{maxAge:1500000,httpOnly:httpOnlyCookie})
       .status(StatusCodes.OK).redirect("https://meroghar.vercel.app/Home")
 
     }catch(e:any){
@@ -116,8 +117,8 @@ export const facebookLoginC=async(req:Request,res:Response)=>{
        
         console.log(req.user);
         const {accessToken,refreshToken,user}=await facebookLoginS(req.user)
-        res.cookie("accessToken",accessToken,{maxAge:1800000,httpOnly:true})
-      .cookie("refreshToken",refreshToken,{maxAge:604800000,httpOnly:true}).cookie("session",JSON.stringify(user),{maxAge:1500000,httpOnly:true})
+        res.cookie("accessToken",accessToken,{maxAge:1800000,httpOnly:httpOnlyCookie})
+      .cookie("refreshToken",refreshToken,{maxAge:604800000,httpOnly:httpOnlyCookie).cookie("session",JSON.stringify(user),{maxAge:1500000,httpOnly:httpOnlyCookie})
       .status(200).redirect("https://meroghar.vercel.app/Home")
 
     }catch(e:any){
@@ -132,8 +133,8 @@ export const logOutC=async(req:Request,res:Response,next:NextFunction)=>{
     if(!req.cookies.refreshToken) return res.status(204).json({success:false,err:"Invalid logout credential"})
     const{refreshToken}=req.cookies
     const verifyToken=await logOutS(refreshToken);
-   if(verifyToken) return  res.status(204).clearCookie("refreshToken",{httpOnly:true}).clearCookie("accessToken",{httpOnly:true}).clearCookie("session",{httpOnly:true}).json({success:true,message:'user logged out'})
-   res.status(204).clearCookie("refreshToken",{httpOnly:true}).clearCookie("accessToken",{httpOnly:true}).clearCookie("session",{httpOnly:true}).json({success:true,message:'user logged out'})
+   if(verifyToken) return  res.status(204).clearCookie("refreshToken",{httpOnly:httpOnlyCookie}).clearCookie("accessToken",{httpOnly:httpOnlyCookie}).clearCookie("session",{httpOnly:httpOnlyCookie}).json({success:true,message:'user logged out'})
+   
     }catch(e:any){
         //if invalid token use detected clear cookie from imposter
         console.log(e)

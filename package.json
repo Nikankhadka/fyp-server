@@ -1,6 +1,5 @@
 {
   "scripts": {
-    
     "start": " tsc &&node dist/server.js"
   },
   "devDependencies": {
