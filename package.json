@@ -1,5 +1,6 @@
 {
   "scripts": {
+    "dev": "tsnd ./src/server.ts --respawn  --transpile-only --exit-child",
     "start": " tsc &&node dist/server.js"
   },
   "devDependencies": {
